@@ -11,6 +11,15 @@ module Sinatra
   module Hancock
     module SSO
       module Helpers
+        def absolute_url(suffix = nil)
+          port_part = case request.scheme
+                      when "http"
+                        request.port == 80 ? "" : ":#{request.port}"
+                      when "https"
+                        request.port == 443 ? "" : ":#{request.port}"
+                      end
+          "#{request.scheme}://#{request.host}#{port_part}#{suffix}"
+        end
         def sso_url
           case ENV['SINATRA_ENV']
             when 'production'
@@ -18,7 +27,8 @@ module Sinatra
             when 'staging'
               'https://login.staging.mydomain.com/sso'
             else
-              'http://localhost:20000/sso'
+              #'http://localhost:20000/sso'
+              'http://moi.atmos.org/sso'
             end
         end
       end

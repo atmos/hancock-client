@@ -1,3 +1,5 @@
+require 'sinatra/base'
+
 module Hancock
   module Spec
     class Client < Sinatra::Default
