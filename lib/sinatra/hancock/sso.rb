@@ -21,16 +21,6 @@ module Sinatra
               'http://localhost:20000/sso'
             end
         end
-
-        def localhost(request)
-          port_part = case request.scheme
-                      when "http"
-                        request.port == 80 ? "" : ":#{request.port}"
-                      when "https"
-                        request.port == 443 ? "" : ":#{request.port}"
-                      end
-          "#{request.scheme}://#{request.host}#{port_part}"
-        end
       end
 
       def self.registered(app)
@@ -42,7 +32,7 @@ module Sinatra
           if contact_id = params['id']
             response['WWW-Authenticate'] = Rack::OpenID.build_header(
               :identifier => "#{sso_url}/users/#{contact_id}",
-              :trust_root => "#{localhost(request)}/login"
+              :trust_root => absolute_url('/login')
             )
             throw :halt, [401, 'got openid?']
           elsif openid = request.env["rack.openid.response"]
@@ -63,7 +53,7 @@ module Sinatra
               throw :halt, [503, "Error: #{openid.status}"]
             end
           else
-            redirect "#{sso_url}/login?return_to=#{localhost(request)}/login"
+            redirect "#{sso_url}/login?return_to=#{absolute_url('/login')}"
           end
         end
 
