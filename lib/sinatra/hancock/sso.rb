@@ -1,4 +1,4 @@
-gem 'sinatra-sinatra', '~>0.9.1'
+gem 'sinatra', '~>0.9.1'
 require 'rack'
 require 'sinatra/base'
 gem 'dm-core', '~>0.9.10'
