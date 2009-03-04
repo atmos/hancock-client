@@ -24,6 +24,7 @@ module Sinatra
         def sso_url
           ::Hancock::Config.sso_url
         end
+
         def absolute_url(suffix = nil)
           port_part = case request.scheme
                       when "http"
