@@ -8,6 +8,7 @@ module Hancock
       get '/' do
         redirect '/login' unless session[:user_id]
         haml(<<-HAML
+%h3= "#{session[:first_name]} #{session[:last_name]} - #{session[:email]}"
 %table
   %thead
     %tr

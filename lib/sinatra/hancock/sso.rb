@@ -48,12 +48,16 @@ module Sinatra
           elsif openid = request.env["rack.openid.response"]
             if openid.status == :success
               if contact_id = openid.display_identifier.split("/").last
+                session.delete(:last_oidreq)
+                session.delete('OpenID::Consumer::last_requested_endpoint')
+                session.delete('OpenID::Consumer::DiscoveredServices::OpenID::Consumer::')
+
                 session[:user_id] = contact_id
                 params = openid.message.get_args("http://openid.net/extensions/sreg/1.1")
                 params.each { |key, value| session[key.to_sym] = value.to_s }
                 redirect '/'
               else
-                raise "No contact could be found for #{contact_id}"
+                raise "No contact could be found for #{openid.display_identifier}"
               end
             else
               throw :halt, [503, "Error: #{openid.status}"]
