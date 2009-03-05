@@ -25,14 +25,27 @@ The goal is to make it simple to write sso enabled apps.
 
     require 'rubygems'
     require 'sinatra'
-    require 'sinatra/hancock/openid'
-    require File.join(File.dirname(__FILE__), 'lib', 'app')
-
-    include Sinatra::Hancock::SSO::Helpers  # something is not right in sinatra
-
-    get '/' do
-      pp session
-      haml :home
+    require 'sinatra/base'
+    require 'sinatra/hancock/client/sso'
+    Hancock::Config.configure do |config|
+      config.sso_url = 'http://moi.atmos.org/sso'
     end
+
+    module Hancock
+      class Client < Sinatra::Default
+        register Sinatra::Hancock::SSO
+        enable :sessions
+        set :environment, :test
+
+        get '/' do
+          redirect '/login' unless session[:user_id]
+          haml(<<-HAML
+%h3= "#{session[:first_name]} #{session[:last_name]} - #{session[:email]}"
+HAML
+          )
+        end
+      end
+    end
+    run Hancock::Client
 
 [sinatra]: http://www.sinatrarb.com

@@ -12,6 +12,8 @@ require 'sinatra/base'
 require 'sinatra/test'
 require 'sinatra/hancock/sso'
 
+require 'hancock-client'
+
 require File.dirname(__FILE__)+'/client'
 
 Spec::Runner.configure do |config|

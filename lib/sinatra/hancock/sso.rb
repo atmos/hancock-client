@@ -1,28 +1,12 @@
-gem 'sinatra', '~>0.9.1'
-require 'rack'
 require 'sinatra/base'
-gem 'dm-core', '~>0.9.10'
-require 'dm-core'
-
-gem 'ruby-openid', '>=2.1.2'
 require File.dirname(__FILE__)+'/../../rack-openid'
-
-module Hancock
-  class Config
-    cattr_accessor :sso_url
-
-    def self.configure(&block)
-      yield self
-    end
-  end
-end
 
 module Sinatra
   module Hancock
     module SSO
       module Helpers
         def sso_url
-          ::Hancock::Config.sso_url
+          @app.class.sso_url
         end
 
         def absolute_url(suffix = nil)
@@ -41,11 +25,11 @@ module Sinatra
         app.helpers Hancock::SSO::Helpers
         app.enable :sessions
 
-        app.get '/login' do
+        app.get '/sso/login' do
           if contact_id = params['id']
             response['WWW-Authenticate'] = Rack::OpenID.build_header(
               :identifier => "#{sso_url}/users/#{contact_id}",
-              :trust_root => absolute_url('/login')
+              :trust_root => absolute_url('/sso/login')
             )
             throw :halt, [401, 'got openid?']
           elsif openid = request.env["rack.openid.response"]
@@ -66,11 +50,11 @@ module Sinatra
               throw :halt, [503, "Error: #{openid.status}"]
             end
           else
-            redirect "#{sso_url}/login?return_to=#{absolute_url('/login')}"
+            redirect "#{sso_url}/login?return_to=#{absolute_url('/sso/login')}"
           end
         end
 
-        app.get '/logout' do
+        app.get '/sso/logout' do
           session.clear
           redirect "#{sso_url}/logout"
         end
