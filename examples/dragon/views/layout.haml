@@ -21,6 +21,7 @@
         %h2 Thank You
         %a{:class => 'menu', :href => 'http://sinatrarb.com'} Sinatra
         %a{:class => 'menu', :href => 'http://engineyard.com'} Engine Yard
+        %a{:class => 'menu', :href => 'http://andreasviklund.com'}Andreas Viklund
       #main
         - if session[:user_id]
           %h2
@@ -32,10 +33,5 @@
 
         = yield
 
-        %p{:class => 'credits'}
-          &copy; 2009 Code by
-          %a{:href => 'http://engineyard.com'} Engine Yard
-          | Design by
-          %a{:href => 'http://andreasviklund.com'}Andreas Viklund
       #footer
 
