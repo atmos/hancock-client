@@ -1,7 +1,7 @@
 $:.push File.join(File.dirname(__FILE__), '..', 'lib')
 require 'rubygems'
 require 'pp'
-gem 'rspec', '~>1.1.12'
+gem 'rspec', '~>1.2.0'
 require 'spec'
 gem 'webrat', '~>0.4.2'
 require 'webrat'

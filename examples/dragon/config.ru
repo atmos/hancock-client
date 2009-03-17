@@ -6,7 +6,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'lib', 'h
 require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'spec', 'client'))
 
 Hancock::Spec::Client.sso_configure do |config|
-  config.sso_url = 'http://moi.atmos.org/sso'
+  config.sso_url = 'http://hancock.atmos.org/sso'
 end
 
 Hancock::Spec::Client.set :views,  'views'
