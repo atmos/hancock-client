@@ -5,7 +5,7 @@ require 'date'
 require 'spec/rake/spectask'
 
 GEM = "hancock-client"
-GEM_VERSION = "0.0.1"
+GEM_VERSION = "0.0.2"
 AUTHOR = "Corey Donohoe"
 EMAIL = ['atmos@atmos.org', 'tim@spork.in']
 HOMEPAGE = "http://github.com/atmos/hancock-client"
