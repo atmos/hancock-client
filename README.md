@@ -40,10 +40,7 @@ The goal is to make it simple to write sso enabled apps.
 
       get '/' do
       redirect '/login' unless session[:user_id]
-      haml(<<-HAML
-              %h3= "#{session[:first_name]} #{session[:last_name]} - #{session[:email]}"
-              HAML
-          )
+      haml(%Q{%h3= "#{session[:first_name]} #{session[:last_name]} - #{session[:email]}"})
       end
     end
 
