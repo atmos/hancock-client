@@ -23,7 +23,8 @@ module Sinatra
       def self.registered(app)
         app.use(Rack::OpenID)
         app.helpers Hancock::SSO::Helpers
-        app.enable :sessions
+        app.enable  :sessions
+        app.disable :raise_errors
 
         app.get '/sso/login' do
           if contact_id = params['id']

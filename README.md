@@ -1,7 +1,9 @@
-hancock_client_sinatra
+hancock-client
 ==============
 
-A gem that integrates [sinatra][sinatra] applications into the Hancock SSO environment
+A gem that integrates [sinatra][sinatra] applications into the Hancock SSO
+environment.  It also doubles as rack middleware that can be used in 
+rails(>= 2.3.2) and merb(>= 1.0)
 
 Dependencies
 ============
@@ -26,26 +28,25 @@ The goal is to make it simple to write sso enabled apps.
     require 'rubygems'
     require 'sinatra'
     require 'sinatra/base'
-    require 'sinatra/hancock/client/sso'
-    Hancock::Config.configure do |config|
-      config.sso_url = 'http://moi.atmos.org/sso'
-    end
+    require 'hancock-client'
 
-    module Hancock
-      class Client < Sinatra::Default
-        register Sinatra::Hancock::SSO
-        enable :sessions
-        set :environment, :test
+    run Hancock::Client
+    class ConsumerApp < Hancock::Client::Default
+      set :sso_url, 'http://hancock.atmos.org/sso'
 
-        get '/' do
-          redirect '/login' unless session[:user_id]
-          haml(<<-HAML
-%h3= "#{session[:first_name]} #{session[:last_name]} - #{session[:email]}"
-HAML
+      set :views,  'views'
+      set :public, 'public'
+      set :environment, :production
+
+      get '/' do
+      redirect '/login' unless session[:user_id]
+      haml(<<-HAML
+              %h3= "#{session[:first_name]} #{session[:last_name]} - #{session[:email]}"
+              HAML
           )
-        end
       end
     end
-    run Hancock::Client
+
+    run ConsumerApp
 
 [sinatra]: http://www.sinatrarb.com
