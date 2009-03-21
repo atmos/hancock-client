@@ -5,10 +5,6 @@ module Sinatra
   module Hancock
     module SSO
       module Helpers
-        def sso_url
-          @app.class.sso_url
-        end
-
         def absolute_url(suffix = nil)
           port_part = case request.scheme
                       when "http"
@@ -25,11 +21,12 @@ module Sinatra
         app.helpers Hancock::SSO::Helpers
         app.enable  :sessions
         app.disable :raise_errors
+#        app.before { ensure_sso_authenticated unless request.path_info =~ %r!^/sso/log(in|out)! }
 
         app.get '/sso/login' do
           if contact_id = params['id']
             response['WWW-Authenticate'] = Rack::OpenID.build_header(
-              :identifier => "#{sso_url}/users/#{contact_id}",
+              :identifier => "#{options.sso_url}/users/#{contact_id}",
               :trust_root => absolute_url('/sso/login')
             )
             throw :halt, [401, 'got openid?']
@@ -51,13 +48,13 @@ module Sinatra
               throw :halt, [503, "Error: #{openid.status}"]
             end
           else
-            redirect "#{sso_url}/login?return_to=#{absolute_url('/sso/login')}"
+            redirect "#{options.sso_url}/login?return_to=#{absolute_url('/sso/login')}"
           end
         end
 
         app.get '/sso/logout' do
           session.clear
-          redirect "#{sso_url}/logout"
+          redirect "#{options.sso_url}/logout"
         end
       end
     end

@@ -9,20 +9,23 @@ require 'dm-sweatshop'
 
 gem 'sinatra', '~>0.9.1'
 require 'sinatra/base'
-require 'sinatra/test'
 require 'sinatra/hancock/sso'
+gem 'rack-test', '~>0.1.0'
+require 'rack/test'
 
 require 'hancock-client'
 
 require File.dirname(__FILE__)+'/client'
 
 Spec::Runner.configure do |config|
-  config.include(Sinatra::Test)
+  config.include(Rack::Test::Methods)
   config.include(Webrat::Methods)
   config.include(Webrat::Matchers)
-  config.before(:each) do
+  def app
     @app = Rack::Builder.new do
       run Hancock::Spec::Client
     end
   end
+  #config.before(:each) do
+  #end
 end

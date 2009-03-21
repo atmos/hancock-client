@@ -3,6 +3,7 @@ require 'rake/gempackagetask'
 require 'rubygems/specification'
 require 'date'
 require 'spec/rake/spectask'
+require 'cucumber/rake/task'
 
 GEM = "hancock-client"
 GEM_VERSION = "0.0.2"
@@ -55,4 +56,15 @@ task :make_spec do
   File.open("#{GEM}.gemspec", "w") do |file|
     file.puts spec.to_ruby
   end
+end
+
+Cucumber::Rake::Task.new(:features) do |t|
+  t.libs << 'lib'
+  t.cucumber_opts = "--format pretty"
+  t.step_list    = 'spec/features/**/*.rb'
+  t.feature_list = 'spec/features/**/*.feature'
+  t.rcov = true
+  t.rcov_opts << '--text-summary'
+  t.rcov_opts << '--sort' << 'coverage' << '--sort-reverse'
+  t.rcov_opts << '--exclude' << '.gem/,spec,examples'
 end
