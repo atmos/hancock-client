@@ -13,13 +13,9 @@ module Hancock
   module Client
     class Default < ::Sinatra::Default
       enable :sessions
-      cattr_accessor :sso_url
+      set :sso_url, nil
 
       register Sinatra::Hancock::SSO
-
-      def self.sso_configure(&block)
-        yield self
-      end
     end
   end
 end
