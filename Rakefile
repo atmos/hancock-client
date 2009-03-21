@@ -6,11 +6,11 @@ require 'spec/rake/spectask'
 require 'cucumber/rake/task'
 
 GEM = "hancock-client"
-GEM_VERSION = "0.0.2"
+GEM_VERSION = "0.0.3"
 AUTHOR = "Corey Donohoe"
 EMAIL = ['atmos@atmos.org', 'tim@spork.in']
 HOMEPAGE = "http://github.com/atmos/hancock-client"
-SUMMARY = "A gem that SSO enables sinatra applications with hancock"
+SUMMARY = "Hancock SSO rack middleware written in sinatra"
 
 spec = Gem::Specification.new do |s|
   s.name = GEM
