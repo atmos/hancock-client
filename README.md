@@ -14,12 +14,13 @@ Dependencies
     % sudo gem sources -a http://gems.github.com
     http://gems.github.com added to sources
 
-    % sudo gem install sinatra-sinatra 
-    % sudo gem install atmos-hancock
+    % sudo gem install sinatra hancock haml
 
 testing
 =======
 Rake works but I'm not 100% sure how to test this correctly
+
+    % sudo gem install rcov rack-test rspec safariwatir cucumber
 
 Application
 ===========
