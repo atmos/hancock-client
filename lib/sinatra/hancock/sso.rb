@@ -21,7 +21,11 @@ module Sinatra
         app.helpers Hancock::SSO::Helpers
         app.enable  :sessions
         app.disable :raise_errors
-#        app.before { ensure_sso_authenticated unless request.path_info =~ %r!^/sso/log(in|out)! }
+        app.before do 
+          unless request.path_info == '/sso/login'
+            throw(:halt, [302, {'Location' => '/sso/login'}, '']) unless session[:user_id]
+          end
+        end
 
         app.get '/sso/login' do
           if contact_id = params['id']

@@ -5,7 +5,6 @@ module Hancock
     class Client < ::Hancock::Client::Default
       set :environment, :development
       get '/' do
-        redirect '/sso/login' unless session[:user_id]
         haml(<<-HAML
 %table
   %thead

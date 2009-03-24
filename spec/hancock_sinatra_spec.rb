@@ -8,6 +8,6 @@ describe Sinatra::Hancock::SSO do
   it "should greet the user when authenticated" do
     pending
     get '/'
-    last_response.body.should have_selector('p')
+    last_response.should have_selector('p')
   end
 end

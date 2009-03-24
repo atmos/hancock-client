@@ -26,6 +26,4 @@ Spec::Runner.configure do |config|
       run Hancock::Spec::Client
     end
   end
-  #config.before(:each) do
-  #end
 end
