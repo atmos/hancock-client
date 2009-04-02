@@ -87,7 +87,7 @@ module Rack
           return redirect_to(url)
         rescue ::OpenID::OpenIDError, Timeout::Error => e
           env[RESPONSE] = MissingResponse.new
-          return self.call(env)
+          return @app.call(env)
         end
       end
 
