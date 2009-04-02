@@ -30,14 +30,18 @@ The goal is to make it simple to write sso enabled apps.
     require 'sinatra'
     require 'sinatra/base'
     require 'hancock-client'
+    require 'logger'
 
-    run Hancock::Client
+    # OpenID writes to STDERR by default.  This is closed under passenger so
+    # to make this reliable you should have openid write failures somewhere.
+    OpenID::Util.logger = Logger.new(File.dirname(__FILE__) + "/openid.log")
+
     class ConsumerApp < Hancock::Client::Default
       set :sso_url, 'http://hancock.atmos.org/sso'
 
       set :views,  'views'
       set :public, 'public'
-      set :environment, :production
+      set :environment, ENV['RACK_ENV']
 
       get '/' do
       redirect '/login' unless session[:user_id]
@@ -46,5 +50,6 @@ The goal is to make it simple to write sso enabled apps.
     end
 
     run ConsumerApp
+
 
 [sinatra]: http://www.sinatrarb.com
