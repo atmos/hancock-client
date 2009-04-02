@@ -22,9 +22,10 @@ module Sinatra
         app.enable  :sessions
         app.disable :raise_errors
         app.before do 
-          unless request.path_info == '/sso/login'
-            throw(:halt, [302, {'Location' => '/sso/login'}, '']) unless session[:user_id]
-          end
+          next if request.path_info == '/sso/login'
+          next if request.path_info == '/sso/logout'
+          next if session[:user_id]
+          throw(:halt, [302, {'Location' => '/sso/login'}, ''])
         end
 
         app.get '/sso/login' do
