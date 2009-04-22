@@ -14,9 +14,13 @@ require File.dirname(__FILE__)+'/sinatra/hancock/sso'
 
 module Hancock
   module Client
-    class Default < ::Sinatra::Default
+    class Default < ::Sinatra::Base
       enable :sessions
       set :sso_url, nil
+
+      def sso_url=(url)
+        options.sso_url = url
+      end
 
       register Sinatra::Hancock::SSO
     end

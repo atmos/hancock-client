@@ -36,20 +36,16 @@ The goal is to make it simple to write sso enabled apps.
     # to make this reliable you should have openid write failures somewhere.
     OpenID::Util.logger = Logger.new(File.dirname(__FILE__) + "/openid.log")
 
-    class ConsumerApp < Hancock::Client::Default
-      set :sso_url, 'http://hancock.atmos.org/sso'
-
-      set :views,  'views'
-      set :public, 'public'
-      set :environment, ENV['RACK_ENV']
-
-      get '/' do
-      redirect '/login' unless session[:user_id]
-      haml(%Q{%h3= "#{session[:first_name]} #{session[:last_name]} - #{session[:email]}"})
+    app = Rack::Builder.new do
+      use Hancock::Client::Default do |sso|
+        sso.sso_url = 'http://localhost:20000'
+      end
+      map '/' do
+        run Proc.new {|env| [200, {'Content-Type' => 'text/html', 'Content-Length' => '5'}, ['HELLO']] }
       end
     end
 
-    run ConsumerApp
+    run app
 
 
 [sinatra]: http://www.sinatrarb.com
