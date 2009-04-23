@@ -15,8 +15,6 @@ require 'rack/test'
 
 require 'hancock-client'
 
-#require File.dirname(__FILE__)+'/client'
-
 Spec::Runner.configure do |config|
   config.include(Rack::Test::Methods)
   config.include(Webrat::Methods)

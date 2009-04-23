@@ -47,5 +47,4 @@ The goal is to make it simple to write sso enabled apps.
 
     run app
 
-
 [sinatra]: http://www.sinatrarb.com
