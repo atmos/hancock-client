@@ -27,26 +27,25 @@ Application
 The goal is to make it simple to write sso enabled apps.
 
     require 'rubygems'
-    require 'sinatra'
-    require 'sinatra/base'
     require 'hancock-client'
     require 'logger'
 
     # OpenID writes to STDERR by default.  This is closed under passenger so
     # to make this reliable you should have openid write failures somewhere.
-    OpenID::Util.logger = Logger.new(File.dirname(__FILE__) + "/openid.log")
+    OpenID::Util.logger = Logger.new(Dir.tmpdir + "/openid.log")
 
-    app = Rack::Builder.new do
+    class HancockClientDemo < Sinatra::Default
+      set :views,  File.dirname(__FILE__) + '/views'
+      set :public, File.dirname(__FILE__) + '/public'
       use Hancock::Client::Default do |sso|
-        sso.sso_url = 'http://localhost:20000'
-        sso.options.views  = 'views'
-        sso.options.public = 'public'
+        sso.sso_url = 'http://hancock.atmos.org/sso'
       end
-      map '/' do
-        run Proc.new {|env| [200, {'Content-Type' => 'text/html', 'Content-Length' => '5'}, ['HELLO']] }
+
+      get '/' do
+        haml(%Q{%h3= "#{session[:first_name]} #{session[:last_name]} - #{session[:email]}"})
       end
     end
 
-    run app
+    run HancockClientDemo
 
 [sinatra]: http://www.sinatrarb.com
