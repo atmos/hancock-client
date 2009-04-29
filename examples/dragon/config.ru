@@ -1,15 +1,20 @@
 #  thin start -p PORT -R config.ru
+require 'tmpdir'
 gem 'sinatra', '~>0.9.1.1'
 require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'lib', 'hancock-client'))
 
-require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'spec', 'client'))
+OpenID::Util.logger = Logger.new(Dir.tmpdir + "/openid.log")
 
-class ConsumerApp < Hancock::Spec::Client
-  set :sso_url, 'http://hancock.atmos.org/sso'
+class HancockClientDemo < Sinatra::Default
+  set :views, File.dirname(__FILE__)+'/views'
+  set :public, File.dirname(__FILE__)+'/public'
+  use Hancock::Client::Default do |sso|
+    sso.sso_url = 'http://hancock.atmos.org/sso'
+  end
 
-  set :views,  'views'
-  set :public, 'public'
-  set :environment, :development
+  get '/' do
+    haml(%Q{%h3= "#{session[:first_name]} #{session[:last_name]} - #{session[:email]}"})
+  end
 end
 
-run ConsumerApp
+run HancockClientDemo

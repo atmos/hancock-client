@@ -39,6 +39,8 @@ The goal is to make it simple to write sso enabled apps.
     app = Rack::Builder.new do
       use Hancock::Client::Default do |sso|
         sso.sso_url = 'http://localhost:20000'
+        sso.options.views  = 'views'
+        sso.options.public = 'public'
       end
       map '/' do
         run Proc.new {|env| [200, {'Content-Type' => 'text/html', 'Content-Length' => '5'}, ['HELLO']] }

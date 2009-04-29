@@ -19,8 +19,6 @@ module Sinatra
       def self.registered(app)
         app.use(Rack::OpenID)
         app.helpers Hancock::SSO::Helpers
-        app.enable  :sessions
-        app.disable :raise_errors
         app.before do 
           next if request.path_info == '/sso/login'
           next if request.path_info == '/sso/logout'
@@ -64,5 +62,4 @@ module Sinatra
       end
     end
   end
-  register Hancock::SSO
 end

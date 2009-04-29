@@ -25,8 +25,8 @@ spec = Gem::Specification.new do |s|
   s.homepage = HOMEPAGE
 
   # Uncomment this to add a dependency
-  s.add_dependency "sinatra", ">=0.9.1.1"
-  s.add_dependency "ruby-openid", ">=2.1.2"
+  s.add_dependency "sinatra", ">=0.9.1.3"
+  s.add_dependency "ruby-openid", ">=2.1.6"
 
   s.require_path = 'lib'
   s.autorequire = GEM

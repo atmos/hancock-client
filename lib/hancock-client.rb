@@ -1,10 +1,8 @@
-gem 'sinatra', '~>0.9.1'
+gem 'sinatra', '~>0.9.1.3'
 require 'rack'
 require 'sinatra/base'
-gem 'dm-core', '~>0.9.10'
-require 'dm-core'
 
-gem 'ruby-openid', '>=2.1.2'
+gem 'ruby-openid', '>=2.1.6'
 require 'openid'
 
 gem 'haml', '~>2.0.9'
@@ -16,6 +14,8 @@ module Hancock
   module Client
     class Default < ::Sinatra::Base
       enable :sessions
+      disable :raise_errors
+
       set :sso_url, nil
 
       def sso_url=(url)
@@ -23,6 +23,15 @@ module Hancock
       end
 
       register Sinatra::Hancock::SSO
+
+      get '*' do
+        if session[:user_id]
+          forward
+        else
+          session[:return_to] = request.path_info
+          redirect "#{options.sso_url}/login?return_to=#{absolute_url('/sso/login')}"
+        end
+      end
     end
   end
 end
