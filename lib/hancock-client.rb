@@ -15,7 +15,6 @@ module Hancock
     class Default < ::Sinatra::Base
       enable :sessions
       disable :raise_errors
-      disable :show_exceptions
 
       set :sso_url, nil
 
