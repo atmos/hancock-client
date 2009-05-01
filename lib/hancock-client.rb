@@ -15,6 +15,7 @@ module Hancock
     class Default < ::Sinatra::Base
       enable :sessions
       disable :raise_errors
+      disable :show_exceptions
 
       set :sso_url, nil
 
@@ -23,15 +24,6 @@ module Hancock
       end
 
       register Sinatra::Hancock::SSO
-
-      get '*' do
-        if session[:user_id]
-          forward
-        else
-          session[:return_to] = request.path_info
-          redirect "#{options.sso_url}?return_to=#{absolute_url('/sso/login')}"
-        end
-      end
     end
   end
 end

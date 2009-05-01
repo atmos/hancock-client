@@ -22,7 +22,7 @@ module Sinatra
         app.before do 
           next if request.path_info == '/sso/login'
           next if request.path_info == '/sso/logout'
-          next if session[:user_id]
+          forward if session[:user_id]
           throw(:halt, [302, {'Location' => '/sso/login'}, ''])
         end
 
