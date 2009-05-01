@@ -29,7 +29,7 @@ module Hancock
           forward
         else
           session[:return_to] = request.path_info
-          redirect "#{options.sso_url}/login?return_to=#{absolute_url('/sso/login')}"
+          redirect "#{options.sso_url}?return_to=#{absolute_url('/sso/login')}"
         end
       end
     end
