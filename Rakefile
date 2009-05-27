@@ -61,8 +61,6 @@ end
 Cucumber::Rake::Task.new(:features) do |t|
   t.libs << 'lib'
   t.cucumber_opts = "--format pretty"
-  t.step_list    = 'spec/features/**/*.rb'
-  t.feature_list = 'spec/features/**/*.feature'
   t.rcov = true
   t.rcov_opts << '--text-summary'
   t.rcov_opts << '--sort' << 'coverage' << '--sort-reverse'

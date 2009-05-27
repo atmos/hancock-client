@@ -19,6 +19,11 @@ module Sinatra
       def self.registered(app)
         app.use(Rack::OpenID)
         app.helpers Hancock::SSO::Helpers
+
+        app.not_found do
+          next if session[:user_id]
+        end
+
         app.before do 
           next if request.path_info == '/sso/login'
           next if request.path_info == '/sso/logout'
