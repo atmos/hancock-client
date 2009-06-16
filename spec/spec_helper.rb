@@ -7,10 +7,8 @@ gem 'webrat', '~>0.4.2'
 require 'webrat'
 require 'dm-sweatshop'
 
-gem 'sinatra', '~>0.9.1.3'
-require 'sinatra/base'
 require 'sinatra/hancock/sso'
-gem 'rack-test', '~>0.1.0'
+gem 'rack-test', '~>0.3.0'
 require 'rack/test'
 
 require 'hancock-client'

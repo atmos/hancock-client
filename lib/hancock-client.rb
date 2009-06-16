@@ -1,5 +1,4 @@
-gem 'sinatra', '~>0.9.1.3'
-require 'rack'
+gem 'sinatra', '~>0.9.2'
 require 'sinatra/base'
 
 gem 'ruby-openid', '>=2.1.6'

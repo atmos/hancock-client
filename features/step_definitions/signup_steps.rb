@@ -55,6 +55,7 @@ Then /^I should be redirected back to the consumer application$/ do
 end
 
 Then /^I should know a little bit about myself as a user$/ do
+  sleep 1
   browser.html.should have_selector "h1:contains('Hancock Client: Sinatra')"
   browser.have_selector "td:contains('#{@email}')"
   browser.have_selector "td:contains('#{@first_name}')"

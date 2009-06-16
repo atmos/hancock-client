@@ -1,6 +1,5 @@
 #  thin start -p PORT -R config.ru
 require 'tmpdir'
-gem 'sinatra', '~>0.9.1.1'
 require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'lib', 'hancock-client'))
 
 OpenID::Util.logger = Logger.new(Dir.tmpdir + "/openid.log")
