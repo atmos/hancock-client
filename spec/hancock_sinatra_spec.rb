@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
-describe Sinatra::Hancock::SSO do
-
+describe ::Hancock::Client::Default do
   it "should protect the root url" do
     get '/'
     last_response.headers['Location'].should eql('/sso/login')

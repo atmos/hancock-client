@@ -24,7 +24,7 @@ module Hancock
       def sso_url=(url)
         options.sso_url = url
       end
-      register Sinatra::Hancock::SSO
+      register ::Hancock::SSO
     end
   end
 end
