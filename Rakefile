@@ -28,6 +28,8 @@ spec = Gem::Specification.new do |s|
   s.add_dependency "sinatra",     "~>0.9.2"
   s.add_dependency "ruby-openid", "~>2.1.6"
   s.add_dependency "haml",        "~>2.0.9"
+  s.add_dependency "rack-openid", "~>0.2"
+
   s.require_path = 'lib'
   s.autorequire = GEM
   s.files = %w(LICENSE README.md Rakefile) + Dir.glob("{lib,spec}/**/*")

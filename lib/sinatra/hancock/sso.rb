@@ -1,5 +1,5 @@
 require 'sinatra/base'
-require File.dirname(__FILE__)+'/../../rack-openid'
+require 'tmpdir'
 
 module Sinatra
   module Hancock
@@ -17,7 +17,7 @@ module Sinatra
       end
 
       def self.registered(app)
-        app.use(Rack::OpenID)
+        app.use(Rack::OpenID, OpenID::Store::Filesystem.new("#{Dir.tmpdir}/openid"))
         app.helpers Hancock::SSO::Helpers
 
         app.not_found do

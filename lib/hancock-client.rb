@@ -4,6 +4,9 @@ require 'sinatra/base'
 gem 'ruby-openid', '>=2.1.6'
 require 'openid'
 
+gem 'rack-openid', '>=0.2'
+require 'rack-openid'
+
 gem 'haml', '~>2.0.9'
 require 'haml'
 
