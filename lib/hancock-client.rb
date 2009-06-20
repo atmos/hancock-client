@@ -10,7 +10,7 @@ require 'rack-openid'
 gem 'haml', '~>2.0.9'
 require 'haml'
 
-require File.dirname(__FILE__)+'/sinatra/hancock/sso'
+require File.dirname(__FILE__)+'/middleware'
 
 module Hancock
   module Client

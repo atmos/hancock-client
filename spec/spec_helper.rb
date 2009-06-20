@@ -1,6 +1,5 @@
-$:.push File.join(File.dirname(__FILE__), '..', 'lib')
-require 'rubygems'
 require 'pp'
+require 'rubygems'
 gem 'rspec', '~>1.2.0'
 require 'spec'
 gem 'webrat', '~>0.4.2'
@@ -11,7 +10,7 @@ require 'sinatra/hancock/sso'
 gem 'rack-test', '~>0.3.0'
 require 'rack/test'
 
-require 'hancock-client'
+File.join(File.dirname(__FILE__), '..', 'lib', 'hancock-client')
 
 Spec::Runner.configure do |config|
   config.include(Rack::Test::Methods)

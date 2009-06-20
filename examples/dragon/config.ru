@@ -2,8 +2,6 @@
 require 'tmpdir'
 require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'lib', 'hancock-client'))
 
-OpenID::Util.logger = Logger.new(Dir.tmpdir + "/openid.log")
-
 class HancockClientDemo < Sinatra::Default
   set :views, File.dirname(__FILE__)+'/views'
   set :public, File.dirname(__FILE__)+'/public'
