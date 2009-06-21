@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
-describe ::Hancock::Client::Default do
+describe "Hancock::Client::Default.exclude_paths=" do
   def app
     @app = Rack::Builder.new do
       use Hancock::Client::Default do |sso|
@@ -22,5 +22,9 @@ describe ::Hancock::Client::Default do
   it "should exclude the specified path given query parameters" do
     get '/api/tokenz?foo=bar'
     last_response.status.should eql(200)
+  end
+  it "should exclude the specified path at a nested level" do
+    get '/api/tokenz/foo/bar/'
+    last_response.status.should eql(302)
   end
 end
