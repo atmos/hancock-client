@@ -25,6 +25,7 @@ module Hancock
       app.before do 
         next if request.path_info == '/sso/login'
         next if request.path_info == '/sso/logout'
+        next if options.exclude_paths && options.exclude_paths.include?(request.path_info)
         next if session[:user_id]
         throw(:halt, [302, {'Location' => '/sso/login'}, ''])
       end

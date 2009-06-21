@@ -20,10 +20,16 @@ module Hancock
       disable :show_exceptions
 
       set :sso_url, nil
+      set :exclude_paths, nil
 
       def sso_url=(url)
         options.sso_url = url
       end
+
+      def exclude_paths=(paths)
+        options.exclude_paths = paths
+      end
+
       register ::Hancock::SSO
     end
   end
