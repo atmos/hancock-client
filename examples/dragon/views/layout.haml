@@ -11,10 +11,11 @@
     #container
       #sidebar
         %h2 Interact
-        - if session[:user_id]
+        - if sso_user_id
           %a{:class => 'menu', :href => '/sso/logout'} Logout
         - else
           %a{:class => 'menu', :href => '/sso/login'} Login
+
         %a{:class => 'menu', :href => 'http://github.com/atmos/hancock_client'} GitHub
         %a{:class => 'menu', :href => 'http://wiki.github.com/atmos/hancock_client'} Wiki
 
@@ -23,9 +24,9 @@
         %a{:class => 'menu', :href => 'http://engineyard.com'} Engine Yard
         %a{:class => 'menu', :href => 'http://andreasviklund.com'}Andreas Viklund
       #main
-        - if session[:user_id]
+        - if sso_user_id
           %h2
-            %a{:href => "mailto:#{session[:email]}"}= "#{session[:first_name]} #{session[:last_name]}"
+            %a{:href => "mailto:#{sso_user_email}"}= "#{sso_user_full_name}"
         - else
           %h2 You should really login...
         %img{:src => 'dragonmini.png', :width => 125, :height => 125, :alt => "Dragon screenshot"}

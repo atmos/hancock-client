@@ -19,14 +19,16 @@ module Hancock
       app.helpers Hancock::SSO::Helpers
 
       app.not_found do
-        next if session[:user_id]
+        session[:sso] ||= { }
+        next if session[:sso][:user_id]
       end
 
       app.before do 
+        session[:sso] ||= { }
         next if request.path_info == '/sso/login'
         next if request.path_info == '/sso/logout'
         next if options.exclude_paths && options.exclude_paths.include?(request.path_info)
-        next if session[:user_id]
+        next if session[:sso][:user_id]
         throw(:halt, [302, {'Location' => '/sso/login'}, ''])
       end
 
@@ -44,9 +46,9 @@ module Hancock
               session.delete('OpenID::Consumer::last_requested_endpoint')
               session.delete('OpenID::Consumer::DiscoveredServices::OpenID::Consumer::')
 
-              session[:user_id] = contact_id
+              session[:sso][:user_id] = contact_id
               params = openid.message.get_args("http://openid.net/extensions/sreg/1.1")
-              params.each { |key, value| session[key.to_sym] = value.to_s }
+              params.each { |key, value| session[:sso][key.to_sym] = value.to_s }
               redirect '/'
             else
               raise "No contact could be found for #{openid.display_identifier}"
