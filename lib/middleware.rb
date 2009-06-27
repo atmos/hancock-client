@@ -12,23 +12,26 @@ module Hancock
                     end
         "#{request.scheme}://#{request.host}#{port_part}#{suffix}"
       end
+
+      def excluded_path?
+        options.exclude_paths && options.exclude_paths.include?(request.path_info)
+      end
     end
 
     def self.registered(app)
       app.use(Rack::OpenID, OpenID::Store::Filesystem.new("#{Dir.tmpdir}/openid"))
       app.helpers Hancock::SSO::Helpers
+      app.helpers Hancock::Helpers::Rack
 
       app.not_found do
-        session[:sso] ||= { }
-        next if session[:sso][:user_id]
+        next if sso_logged_in?
       end
 
       app.before do 
-        session[:sso] ||= { }
         next if request.path_info == '/sso/login'
         next if request.path_info == '/sso/logout'
-        next if options.exclude_paths && options.exclude_paths.include?(request.path_info)
-        next if session[:sso][:user_id]
+        next if excluded_path?
+        next if sso_logged_in?
         throw(:halt, [302, {'Location' => '/sso/login'}, ''])
       end
 
@@ -42,13 +45,8 @@ module Hancock
         elsif openid = request.env["rack.openid.response"]
           if openid.status == :success
             if contact_id = openid.display_identifier.split("/").last
-              session.delete(:last_oidreq)
-              session.delete('OpenID::Consumer::last_requested_endpoint')
-              session.delete('OpenID::Consumer::DiscoveredServices::OpenID::Consumer::')
-
-              session[:sso][:user_id] = contact_id
-              params = openid.message.get_args("http://openid.net/extensions/sreg/1.1")
-              params.each { |key, value| session[:sso][key.to_sym] = value.to_s }
+              sreg_params = openid.message.get_args("http://openid.net/extensions/sreg/1.1")
+              sso_login_as(contact_id, sreg_params)
               redirect '/'
             else
               raise "No contact could be found for #{openid.display_identifier}"

@@ -11,6 +11,7 @@ gem 'haml', '~>2.0.9'
 require 'haml'
 
 require File.dirname(__FILE__)+'/middleware'
+require File.dirname(__FILE__)+'/helpers/rack'
 
 module Hancock
   module Client
