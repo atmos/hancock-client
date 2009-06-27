@@ -30,7 +30,6 @@ module Hancock
       def exclude_paths=(paths)
         options.exclude_paths = paths
       end
-
       register ::Hancock::SSO
     end
   end

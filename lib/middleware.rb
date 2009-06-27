@@ -2,30 +2,9 @@ require 'tmpdir'
 
 module Hancock
   module SSO
-    module Helpers
-      def absolute_url(suffix = nil)
-        port_part = case request.scheme
-                    when "http"
-                      request.port == 80 ? "" : ":#{request.port}"
-                    when "https"
-                      request.port == 443 ? "" : ":#{request.port}"
-                    end
-        "#{request.scheme}://#{request.host}#{port_part}#{suffix}"
-      end
-
-      def excluded_path?
-        options.exclude_paths && options.exclude_paths.include?(request.path_info)
-      end
-    end
-
     def self.registered(app)
       app.use(Rack::OpenID, OpenID::Store::Filesystem.new("#{Dir.tmpdir}/openid"))
-      app.helpers Hancock::SSO::Helpers
       app.helpers Hancock::Helpers::Rack
-
-      app.not_found do
-        next if sso_logged_in?
-      end
 
       app.before do 
         next if request.path_info == '/sso/login'
