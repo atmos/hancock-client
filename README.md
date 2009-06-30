@@ -38,4 +38,9 @@ The goal is to make it simple to write sso enabled apps.
 
     run HancockClientDemo
 
+Feedback
+========
+* [Google Group][googlegroup]
+
 [sinatra]: http://www.sinatrarb.com
+[googlegroup]: http://groups.google.com/group/hancock-users
