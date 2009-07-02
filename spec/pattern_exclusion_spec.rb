@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/spec_helper'
 describe "Hancock::Client::Default.exclude_paths=" do
   def app
     @app = Rack::Builder.new do
-      use Hancock::Client::Default do |sso|
+      use Hancock::Client::Middleware do |sso|
         sso.sso_url = 'http://localhost:20000'
         sso.exclude_paths = %w(/foo/bar /api/tokenz)
       end
