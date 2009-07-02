@@ -18,7 +18,7 @@ describe "Hancock::Client::MockMiddleware" do
       end
     end
   end
-  it "should exclude the specified path" do
+  it "should have a valid users logged in" do
     get '/'
     last_response.body.should match(/^HELLO \w{3,12}@example.com$/)
     last_response.status.should eql(200)

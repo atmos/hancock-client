@@ -26,7 +26,7 @@ The goal is to make it simple to write sso enabled apps.
     class HancockClientDemo < Sinatra::Default
       set :views,  File.dirname(__FILE__) + '/views'
       set :public, File.dirname(__FILE__) + '/public'
-      use Hancock::Client::Default do |sso|
+      use Hancock::Client::Middleware do |sso|
         sso.sso_url = 'http://hancock.atmos.org/sso'
         sso.exclude_paths = %w(/api/)
       end
