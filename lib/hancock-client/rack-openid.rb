@@ -81,7 +81,7 @@ module Rack
 
         consumer = ::OpenID::Consumer.new(session, @store)
         identifier = params["identifier"]
-        service = ::OpenID::OpenIDServiceEndpoint.from_op_endpoint_url("#{Hancock::Client.sso_url}")
+        service = ::OpenID::OpenIDServiceEndpoint.from_op_endpoint_url("#{Hancock::Client.sso_url}/sso")
 
         begin
           oidreq = consumer.begin_without_discovery(service, true)
