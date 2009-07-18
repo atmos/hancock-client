@@ -15,9 +15,12 @@ describe 'Hancock::Client::Default' do
   it "should protect the root url from all HTTP verbs" do
     %w(get post put head delete).each do |verb|
       send(verb, '/')
-      last_response.headers['Location'].should eql('/sso/login')
-      get last_response.headers['Location']
-      last_response.headers['Location'].should eql('http://localhost:20000/login?return_to=http://example.org/sso/login')
+      last_response['WWW-Authenticate'].should be
+      last_response.status.should eql(401)
+
+      last_response['WWW-Authenticate'].should match(%r!anonymous="true"!)
+      last_response['WWW-Authenticate'].should match(%r!trust_root="http://example.org/sso/login"!)
+      last_response['WWW-Authenticate'].should match(%r!return_to="http://example.org/sso/login"!)
     end
   end
 end

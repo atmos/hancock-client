@@ -25,6 +25,6 @@ describe "Hancock::Client::Default.exclude_paths=" do
   end
   it "should exclude the specified path at a nested level" do
     get '/api/tokenz/foo/bar/'
-    last_response.status.should eql(302)
+    last_response.status.should eql(401)
   end
 end

@@ -7,7 +7,7 @@ class HancockClientDemo < Sinatra::Default
   include Hancock::Client::Helpers::Rack
 
   use Hancock::Client::Middleware do |sso|
-    sso.sso_url = 'http://hancock.atmos.org/sso'
+    sso.sso_url = 'http://hancock.atmos.org'
   end
 
   get '/' do

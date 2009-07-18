@@ -8,7 +8,7 @@ And /^I am redirected to the SSO Server$/ do
 end
 
 Then /^I should click the signup button$/ do
-  browser.link(:url, "#{sso_server}/signup").click
+  browser.link(:url, "#{sso_server}/sso/signup").click
 end
 
 When /^the page loads I should see a signup form$/ do
@@ -28,7 +28,7 @@ And /^click submit$/ do
 end
 
 Then /^I should receive a registration URL$/ do
-  @register_url = browser.html.match(%r!#{sso_server}/register/\w{40}!).to_s
+  @register_url = browser.html.match(%r!#{sso_server}/sso/register/\w{40}!).to_s
   @register_url.should_not eql('')
   @password = /\w+{9,32}/.gen
 end
