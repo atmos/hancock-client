@@ -7,13 +7,14 @@ rails(>= 2.3.2) and sinatra applications.
 
 Dependencies
 ============
-    % sudo geminstaller
+    % sudo gem install bundler
 
 testing
 =======
-Rake works but I'm not 100% sure how to test this correctly
+Rake works for basic stuff, there's safariwatir for integration.
 
-    % sudo gem install rcov rack-test rspec safariwatir cucumber
+    % gem bundle
+    % bin/rake
 
 Application
 ===========
@@ -32,10 +33,9 @@ The goal is to make it simple to write sso enabled apps.
       end
 
       get '/' do
-        haml(%Q{%h3= "#{sso_user_full_name} - #{sso_user_email}"})
+        haml(:home)
       end
     end
-
     run HancockClientDemo
 
 Feedback
