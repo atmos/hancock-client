@@ -16,13 +16,21 @@ Rake works for basic stuff, there's safariwatir for integration.
     % gem bundle
     % bin/rake
 
+For the integration you need to be running a local application
+
+    % cd examples/dragon
+    % ../../bin/rackup config.ru -p  -p 4567
+
+In another shell run the following from the root of the project
+
+    % bin/rake features
+
 Application
 ===========
 The goal is to make it simple to write sso enabled apps.
 
     require 'rubygems'
     require 'hancock-client'
-    require 'logger'
 
     class HancockClientDemo < Sinatra::Default
       set :views,  File.dirname(__FILE__) + '/views'
