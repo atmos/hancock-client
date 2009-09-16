@@ -1,3 +1,4 @@
+require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'vendor', 'gems', 'environment'))
 require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'lib', 'hancock-client'))
 
 class HancockClientDemo < Sinatra::Default
@@ -11,7 +12,7 @@ class HancockClientDemo < Sinatra::Default
   end
 
   get '/' do
-    haml(%Q{%h3= "#{sso_user_full_name} - #{sso_user_email}"})
+    haml(:home)
   end
 end
 

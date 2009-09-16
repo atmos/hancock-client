@@ -1,17 +1,12 @@
 require 'pp'
-require 'rubygems'
-gem 'sinatra', '~>0.9.2'
+require 'tmpdir'
 require 'sinatra/base'
 
-gem 'ruby-openid', '>=2.1.7'
 require 'openid'
 require 'openid/store/memory'
 require 'openid/store/filesystem'
 
-gem 'haml', '~>2.0.9'
 require 'haml'
-
-require 'tmpdir'
 
 require File.dirname(__FILE__)+'/hancock-client/helpers/rack'
 require File.dirname(__FILE__)+'/hancock-client/rack-openid'

@@ -1,14 +1,17 @@
-require 'pp'
+require File.join(File.dirname(__FILE__), '..', 'vendor', 'gems', 'environment')
 require File.join(File.dirname(__FILE__), '..', 'lib', 'hancock-client')
 require File.join(File.dirname(__FILE__), '..', 'lib', 'hancock-client', 'mock_middleware')
 
-gem 'rspec', '~>1.2.0'
 require 'spec'
-gem 'rack-test', '>=0.4.0'
 require 'rack/test'
-gem 'webrat', '~>0.4.4'
 require 'webrat'
-require 'dm-sweatshop'
+require 'randexp'
+
+Webrat.configure do |config|
+  config.mode = :rack
+  config.application_framework = :sinatra
+  config.application_port = 4567
+end
 
 Spec::Runner.configure do |config|
   config.include(Rack::Test::Methods)

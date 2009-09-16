@@ -1,9 +1,10 @@
-require 'rubygems'
+require File.join(File.dirname(__FILE__), 'vendor', 'gems', 'environment')
 require 'rake/gempackagetask'
 require 'rubygems/specification'
 require 'date'
 require 'spec/rake/spectask'
 require 'cucumber/rake/task'
+require 'bundler'
 
 GEM = "hancock-client"
 GEM_VERSION = "0.0.9"
@@ -24,11 +25,11 @@ spec = Gem::Specification.new do |s|
   s.email = EMAIL
   s.homepage = HOMEPAGE
 
-  # Uncomment this to add a dependency
-  s.add_dependency "sinatra",     "~>0.9.2"
-  s.add_dependency "ruby-openid", "~>2.1.6"
-  s.add_dependency "haml",        "~>2.0.9"
-  s.add_dependency "rack-openid", "~>0.2"
+  manifest = Bundler::Environment.load(File.dirname(__FILE__) + '/Gemfile')
+  manifest.dependencies.each do |d|
+    next if d.only && d.only.include?('test')
+    s.add_dependency(d.name, d.version)
+  end
 
   s.require_path = 'lib'
   s.autorequire = GEM
