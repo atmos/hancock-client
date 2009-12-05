@@ -27,7 +27,7 @@ spec = Gem::Specification.new do |s|
 
   manifest = Bundler::Environment.load(File.dirname(__FILE__) + '/Gemfile')
   manifest.dependencies.each do |d|
-    next if d.only && d.only.include?('test')
+    next unless d.only && d.only.include?('release')
     s.add_dependency(d.name, d.version)
   end
 
@@ -68,4 +68,20 @@ Cucumber::Rake::Task.new(:features) do |t|
   t.rcov_opts << '--text-summary'
   t.rcov_opts << '--sort' << 'coverage' << '--sort-reverse'
   t.rcov_opts << '--exclude' << '.gem/,spec,examples'
+end
+
+task :example do |t|
+  rackup_pid = fork
+  if rackup_pid.nil?
+    Dir.chdir(File.join(File.dirname(__FILE__), 'examples', 'dragon')) do
+      exec("../../bin/rackup", "config.ru", "-p", "4567")
+    end
+  else
+    sleep 2
+    fork do
+      exec("bin/rake", "features")
+    end
+    Process.wait
+    Process.kill("INT", rackup_pid)
+  end
 end

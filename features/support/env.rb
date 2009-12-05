@@ -1,6 +1,6 @@
-require File.expand_path(File.dirname(__FILE__)+'/../../spec/spec_helper')
-gem 'safariwatir', '~>0.3.3'
-require 'safariwatir'
+Bundler.require_env(:test)
+require File.join(File.dirname(__FILE__), '..', '..', 'lib', 'hancock-client')
+require File.join(File.dirname(__FILE__), '..', '..', 'lib', 'hancock-client', 'mock_middleware')
 
 World do
   def sso_server

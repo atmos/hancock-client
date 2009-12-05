@@ -1,15 +1,21 @@
-gem 'sinatra',        '>=0.9.4'
-gem 'haml',           '~>2.2.0'
-gem 'ruby-openid',    '~>2.1.7'
-
-gem 'rack-test',   '~>0.4.0', :only => :test
-gem 'webrat',      '~>0.5.0', :only => :test
-gem 'rspec',                  :only => :test
-gem 'randexp',                :only => :test
-gem 'rake',                   :only => :test
-gem 'rcov',                   :only => :test
-gem 'cucumber',               :only => :test
-gem 'safariwatir', '~>0.3.3', :only => :test
-gem 'bundler',     '>=0.5.0', :only => :test
-
 disable_system_gems
+
+only :release do
+  gem 'sinatra',        '>=0.9.4'
+  gem 'haml',           '~>2.2.0'
+  gem 'ruby-openid',    '~>2.1.7'
+end
+
+only :test do
+  gem 'rack-test',   '~>0.4.0',    :require_as => 'rack/test'
+  gem 'webrat',      '~>0.5.0'
+  gem 'rspec',                     :require_as => 'spec'
+  gem 'randexp'
+  gem 'rake'
+  gem 'rcov'
+  gem 'cucumber'
+  gem 'safariwatir', '~>0.3.3'
+  gem 'bundler',     '>=0.7.0'
+  gem 'ruby-debug'
+  gem 'rb-appscript'
+end

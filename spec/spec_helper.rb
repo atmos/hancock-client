@@ -1,11 +1,6 @@
-require File.join(File.dirname(__FILE__), '..', 'vendor', 'gems', 'environment')
+Bundler.require_env(:test)
 require File.join(File.dirname(__FILE__), '..', 'lib', 'hancock-client')
 require File.join(File.dirname(__FILE__), '..', 'lib', 'hancock-client', 'mock_middleware')
-
-require 'spec'
-require 'rack/test'
-require 'webrat'
-require 'randexp'
 
 Webrat.configure do |config|
   config.mode = :rack

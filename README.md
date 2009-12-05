@@ -1,9 +1,9 @@
 hancock-client
 ==============
 
-A gem that integrates [sinatra][sinatra] applications into the Hancock SSO
-environment.  It also doubles as rack middleware that can be used in 
-rails(>= 2.3.2) and sinatra applications.
+A gem that integrates [sinatra][sinatra] applications into the 
+[Hancock SSO][hancocksso] environment.  It also doubles as rack middleware that
+can be used in rails(>= 2.3.2) and sinatra applications.
 
 Dependencies
 ============
@@ -16,25 +16,20 @@ Rake works for basic stuff, there's safariwatir for integration.
     % gem bundle
     % bin/rake
 
-For the integration you need to be running a local application
+For the integration tests you'll need to be on a mac,
 
-    % cd examples/dragon
-    % ../../bin/rackup config.ru -p  -p 4567
-
-In another shell run the following from the root of the project
-
-    % bin/rake features
+    % bin/rake example
 
 Application
 ===========
 The goal is to make it simple to write sso enabled apps.
 
-    require 'rubygems'
     require 'hancock-client'
 
     class HancockClientDemo < Sinatra::Default
       set :views,  File.dirname(__FILE__) + '/views'
       set :public, File.dirname(__FILE__) + '/public'
+
       use Hancock::Client::Middleware do |sso|
         sso.sso_url = 'http://hancock.atmos.org/sso'
         sso.exclude_paths = %w(/api/)
@@ -48,7 +43,7 @@ The goal is to make it simple to write sso enabled apps.
 
 Feedback
 ========
-* [Google Group][googlegroup]
+* Use the Issues Page on Github for Questions
 
 [sinatra]: http://www.sinatrarb.com
-[googlegroup]: http://groups.google.com/group/hancock-users
+[hancocksso]: http://www.github.com/atmos/hancock/
