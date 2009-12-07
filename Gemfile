@@ -4,10 +4,12 @@ only :release do
   gem 'sinatra',        '>=0.9.4'
   gem 'haml',           '~>2.2.0'
   gem 'ruby-openid',    '~>2.1.7'
+  gem 'rack-client',    '~>0.2.0'
+  gem 'json'
 end
 
 only :test do
-  gem 'rack-test',   '~>0.4.0',    :require_as => 'rack/test'
+  gem 'rack-test',   '~>0.5.0',    :require_as => 'rack/test'
   gem 'webrat',      '~>0.5.0'
   gem 'rspec',                     :require_as => 'spec'
   gem 'randexp'

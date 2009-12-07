@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/spec_helper'
+require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 
 describe "Hancock::Client::Default.exclude_paths=" do
   def app
@@ -15,15 +15,15 @@ describe "Hancock::Client::Default.exclude_paths=" do
       end
     end
   end
-  it "should exclude the specified path" do
+  it "excludes the specified path" do
     get '/api/tokenz'
     last_response.status.should eql(200)
   end
-  it "should exclude the specified path given query parameters" do
+  it "excludes the specified path given query parameters" do
     get '/api/tokenz?foo=bar'
     last_response.status.should eql(200)
   end
-  it "should exclude the specified path at a nested level" do
+  it "excludes the specified path at a nested level" do
     get '/api/tokenz/foo/bar/'
     last_response.status.should eql(401)
   end

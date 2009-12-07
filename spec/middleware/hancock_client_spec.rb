@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/spec_helper'
+require File.join(File.dirname(__FILE__), '..', 'spec_helper')
 
 describe 'Hancock::Client::Default' do
   def app
@@ -12,7 +12,7 @@ describe 'Hancock::Client::Default' do
     end
   end
 
-  it "should protect the root url from all HTTP verbs" do
+  it "protects the root url from all HTTP verbs" do
     %w(get post put head delete).each do |verb|
       send(verb, '/')
       last_response['WWW-Authenticate'].should be
